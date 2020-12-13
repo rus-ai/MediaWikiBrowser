@@ -9,7 +9,6 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -21,11 +20,11 @@
             android:id="@+id/editTextSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="10"
             android:ems="10"
-            android:inputType="text"
             android:hint="@string/editSearchHint"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/buttonSearch"

@@ -2,4 +2,5 @@
 <resources>
     <string name="buttonSearch">Поиск</string>
     <string name="editSearchHint">Поисковый запрос</string>
+    <string name="loadingString">Загрузка…</string>
 </resources>
