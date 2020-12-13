@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MediaWiki Browser</string>
+    <string name="buttonSearch">Search</string>
+    <string name="editSearchHint">Search query</string>
+</resources>
