@@ -11,3 +11,4 @@
 local.properties
 /.idea/
 /.idea
+/gradle/wrapper/gradle-wrapper.properties
