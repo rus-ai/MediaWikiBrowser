@@ -54,7 +54,7 @@ class MediaWikiViewActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val json = response.body()?.string()
+                val json = response.body?.string()
                 Log.i("MediaWikiBrowser", "Response")
                 Log.i("MediaWikiBrowser", json.toString())
                 val mediaWikiResponse: MediaWikiResponse = Gson().fromJson(json, MediaWikiResponse::class.java)
