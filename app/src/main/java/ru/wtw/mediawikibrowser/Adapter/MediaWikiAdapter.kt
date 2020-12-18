@@ -1,18 +1,17 @@
 package ru.wtw.mediawikibrowser.Adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ru.wtw.mediawikibrowser.Model.AllPages_old
+import ru.wtw.mediawikibrowser.Model.AllPagesClass
 import ru.wtw.mediawikibrowser.Model.ViewType
 import ru.wtw.mediawikibrowser.Model.ViewType.Companion.fromValue
 import ru.wtw.mediawikibrowser.R
 
 
-class MediaWikiAdapter(private val context: Context, private val dataSet: MutableList<AllPages_old>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MediaWikiAdapter( private val dataSet: MutableList<AllPagesClass>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return if ( position == dataSet.size ) {
@@ -33,7 +32,7 @@ class MediaWikiAdapter(private val context: Context, private val dataSet: Mutabl
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ServiceUpdateViewHolder -> holder.bindUpdate()
-            is MediaWikiArticleViewHolder -> holder.bindData(dataSet[position].name.toString())
+            is MediaWikiArticleViewHolder -> holder.bindData(dataSet[position].title.toString())
         }
     }
 
