@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:text="@string/loadingString"
-    android:textStyle="bold"
-    app:drawableLeftCompat="@android:drawable/ic_popup_sync" />
+    android:orientation="horizontal"
+    android:gravity="center_horizontal">
+    <ProgressBar
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:gravity="center_vertical"
+        android:text="@string/loadingString"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/loadingString"
+        android:textStyle="bold" />
+</LinearLayout>
 
