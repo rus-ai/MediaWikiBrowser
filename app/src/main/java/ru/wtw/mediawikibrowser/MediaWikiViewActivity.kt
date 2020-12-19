@@ -3,6 +3,7 @@ package ru.wtw.mediawikibrowser
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import ru.wtw.mediawikibrowser.databinding.ActivityMediawikiBinding
@@ -23,7 +24,6 @@ class MediaWikiViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMediawikiBinding
     private lateinit var adapter: MediaWikiAdapter
     private lateinit var scrollListener: RecyclerViewLoadMoreScroll
-    private lateinit var mLayoutManager: RecyclerView.LayoutManager
 
     private var allPages: MutableList<AllPagesClass> = ArrayList()
 
@@ -59,6 +59,16 @@ class MediaWikiViewActivity : AppCompatActivity() {
                 allPages.clear()
                 getAllPagesList(binding.editTextSearch.text.toString())
                 binding.editTextSearch.text.clear()
+            }
+        }
+
+        binding.editTextSearch.setOnKeyListener { _, keyCode, event ->
+            when {
+                ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) -> {
+                    binding.buttonSearch.performClick()
+                    return@setOnKeyListener true
+                }
+                else -> false
             }
         }
 
