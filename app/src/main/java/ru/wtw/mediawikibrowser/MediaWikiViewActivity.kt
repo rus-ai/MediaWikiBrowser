@@ -15,7 +15,7 @@ import ru.wtw.mediawikibrowser.Interface.OnLoadMoreListener
 
 class MediaWikiViewActivity : AppCompatActivity() {
 
-    private val pageCount = 30
+    private val pageCount = 100
     private val url = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=allpages&aplimit=$pageCount&apfrom="
 
     var nextSearch = ""

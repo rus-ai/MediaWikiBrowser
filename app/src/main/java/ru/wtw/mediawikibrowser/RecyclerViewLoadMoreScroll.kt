@@ -38,15 +38,17 @@ class RecyclerViewLoadMoreScroll(layoutManager: RecyclerView.LayoutManager) :
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-
         if (dy <= 0) return
+        checkLoadingNeeded()
+    }
 
+    private fun checkLoadingNeeded() {
         totalItemCount = mLayoutManager.itemCount
 
         when (mLayoutManager) {
             is StaggeredGridLayoutManager -> {
                 val lastVisibleItemPositions =
-                    (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
+                        (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
                 // get maximum element within the list
                 lastVisibleItem = getLastVisibleItem(lastVisibleItemPositions)
             }
@@ -62,7 +64,6 @@ class RecyclerViewLoadMoreScroll(layoutManager: RecyclerView.LayoutManager) :
             mOnLoadMoreListener.onLoadMore()
             isLoading = true
         }
-
     }
 
     private fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {
