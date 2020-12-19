@@ -6,39 +6,34 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import ru.wtw.mediawikibrowser.Interface.OnLoadMoreListener
 
-class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
+class RecyclerViewLoadMoreScroll(layoutManager: RecyclerView.LayoutManager) :
+    RecyclerView.OnScrollListener() {
 
     private var visibleThreshold = 5
     private lateinit var mOnLoadMoreListener: OnLoadMoreListener
     private var isLoading: Boolean = false
     private var lastVisibleItem: Int = 0
     private var totalItemCount:Int = 0
-    private var mLayoutManager: RecyclerView.LayoutManager
+    private var mLayoutManager: RecyclerView.LayoutManager = layoutManager
+
+    init {
+        if (layoutManager is StaggeredGridLayoutManager) {
+            visibleThreshold *= layoutManager.spanCount
+        } else if (layoutManager is GridLayoutManager) {
+            visibleThreshold *= layoutManager.spanCount
+        }
+    }
 
     fun setLoaded() {
         isLoading = false
     }
 
-    fun getLoaded(): Boolean {
+    private fun getLoaded(): Boolean {
         return isLoading
     }
 
     fun setOnLoadMoreListener(mOnLoadMoreListener: OnLoadMoreListener) {
         this.mOnLoadMoreListener = mOnLoadMoreListener
-    }
-
-    constructor(layoutManager: LinearLayoutManager) {
-        this.mLayoutManager = layoutManager
-    }
-
-    constructor(layoutManager: GridLayoutManager) {
-        this.mLayoutManager = layoutManager
-        visibleThreshold *= layoutManager.spanCount
-    }
-
-    constructor(layoutManager: StaggeredGridLayoutManager) {
-        this.mLayoutManager = layoutManager
-        visibleThreshold *= layoutManager.spanCount
     }
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -48,18 +43,22 @@ class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
 
         totalItemCount = mLayoutManager.itemCount
 
-        if (mLayoutManager is StaggeredGridLayoutManager) {
-            val lastVisibleItemPositions =
-                (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
-            // get maximum element within the list
-            lastVisibleItem = getLastVisibleItem(lastVisibleItemPositions)
-        } else if (mLayoutManager is GridLayoutManager) {
-            lastVisibleItem = (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
-        } else if (mLayoutManager is LinearLayoutManager) {
-            lastVisibleItem = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+        when (mLayoutManager) {
+            is StaggeredGridLayoutManager -> {
+                val lastVisibleItemPositions =
+                    (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
+                // get maximum element within the list
+                lastVisibleItem = getLastVisibleItem(lastVisibleItemPositions)
+            }
+            is GridLayoutManager -> {
+                lastVisibleItem = (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
+            }
+            is LinearLayoutManager -> {
+                lastVisibleItem = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            }
         }
 
-        if (!isLoading && totalItemCount <= lastVisibleItem + visibleThreshold) {
+        if (!getLoaded() && totalItemCount <= lastVisibleItem + visibleThreshold) {
             mOnLoadMoreListener.onLoadMore()
             isLoading = true
         }

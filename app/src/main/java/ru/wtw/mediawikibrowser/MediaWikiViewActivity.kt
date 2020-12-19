@@ -45,10 +45,10 @@ class MediaWikiViewActivity : AppCompatActivity() {
         scrollListener = RecyclerViewLoadMoreScroll(mLayoutManager as LinearLayoutManager)
         scrollListener.setOnLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
-                LoadMoreData()
+                loadMoreData()
             }
 
-            private fun LoadMoreData() {
+            private fun loadMoreData() {
                 getAllPagesList(nextSearch)
             }
         })
