@@ -3,7 +3,6 @@ package ru.wtw.mediawikibrowser
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import ru.wtw.mediawikibrowser.databinding.ActivityMediawikiBinding
@@ -36,23 +35,24 @@ class MediaWikiViewActivity : AppCompatActivity() {
         binding = ActivityMediawikiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mLayoutManager = LinearLayoutManager(this)
         adapter = MediaWikiAdapter(allPages)
 
         binding.mediaWikiRecycleView.adapter = adapter
-        binding.mediaWikiRecycleView.layoutManager = mLayoutManager
         binding.mediaWikiRecycleView.setHasFixedSize(true)
-        scrollListener = RecyclerViewLoadMoreScroll(mLayoutManager as LinearLayoutManager)
-        scrollListener.setOnLoadMoreListener(object : OnLoadMoreListener {
-            override fun onLoadMore() {
-                loadMoreData()
-            }
 
-            private fun loadMoreData() {
-                getAllPagesList(nextSearch)
-            }
-        })
-        binding.mediaWikiRecycleView.addOnScrollListener(scrollListener)
+        if (binding.mediaWikiRecycleView.layoutManager != null) {
+            scrollListener = RecyclerViewLoadMoreScroll(binding.mediaWikiRecycleView.layoutManager!!)
+            scrollListener.setOnLoadMoreListener(object : OnLoadMoreListener {
+                override fun onLoadMore() {
+                    loadMoreData()
+                }
+
+                private fun loadMoreData() {
+                    getAllPagesList(nextSearch)
+                }
+            })
+            binding.mediaWikiRecycleView.addOnScrollListener(scrollListener)
+        }
 
         binding.buttonSearch.setOnClickListener {
             if (!binding.editTextSearch.text.isNullOrBlank()) {
