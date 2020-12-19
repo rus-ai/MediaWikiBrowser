@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import ru.wtw.mediawikibrowser.databinding.ActivityMediawikiBinding
 import ru.wtw.mediawikibrowser.Adapter.MediaWikiAdapter
